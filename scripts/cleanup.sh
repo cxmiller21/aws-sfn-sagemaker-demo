@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Run this script from the root of the project
+# ./scripts/cleanup.sh
+
 echo "Cleaning up AWS resources..."
 
 # Sagemaker cleanup

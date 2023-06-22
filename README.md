@@ -1,16 +1,43 @@
-# aws-sfn-sagemaker-demo
+# AWS Step Function and Sagemaker ML Pipeline Demo
 
-Demo project using AWS Step Functions to Automate an AWS SageMaker workflow
+This project uses AWS Step Functions to Automate an AWS SageMaker workflow. I followed this AWS sample project: [link](<https://github.com/aws-samples/amazon-sagemaker-ml-pipeline-deploy-with-terraform/tree/main>)
 
-Following this AWS blog post: [link](<https://aws.amazon.com/blogs/machine-learning/define-and-run-machine-learning-pipelines-on-step-functions-using-python-workflow-studio-or-states-language/>)
+## Getting Started
 
-Current state of the project:
+### Terraform
 
-Half complete - The IAM roles and S3 buckets are working but the
-training data needs to be uploaded to S3 and I'm not sure which
-format the data needs to be in.
+Create the AWS resources for the project.
 
-TODO:
+```bash
+cd terraform
+# Update the versions.tf backend "s3" bucket name to your own bucket
+terraform init
+terraform apply # Enter "yes" when prompted
+```
 
-- Figure out how to upload training data to S3 ([AWS tutorial link with more details](<https://github.com/aws/amazon-sagemaker-examples/blob/be56aa654b9ac7283c4be9c7b2298e475367a7ac/step-functions-data-science-sdk/training_pipeline_pytorch_mnist/training_pipeline_pytorch_mnist.ipynb>))
-- Apply Terraform resources and run the State Machine to see if it works
+### Docker
+
+Build and publish the Docker image to ECR that will be used for the SageMaker training job. This script does not need to be modified.
+
+```bash
+./scripts/build_and_push_to_ecr.sh
+```
+
+## Running the ML Pipeline
+
+1. Login to the AWS console and navigate to the Step Functions service
+2. Click on the `ml-pipeline-demo-default-state-machine` state machine created by Terraform
+3. Click the `Start execution` button and add a custom message or leave default value
+4. Wait for State Machine to complete (~2 minutes)
+5. View Sagemaker training job and endpoint in the AWS console
+6. Run the `scripts/test_endpoint.py` script to verify the endpoint is working
+
+## Cleanup
+
+The AWS resources created by Terraform can be destroyed by running the following script.
+
+```bash
+./scripts/cleanup.sh
+```
+
+This script will delete the Sagemaker endpoint and the AWS resources created by Terraform. The S3 bucket and ECR repository created by Terraform **will also be deleted** due to the `force_destroy = true` being set on the resources.
