@@ -2,7 +2,7 @@
 
 This project uses AWS Step Functions to Automate an AWS SageMaker workflow.
 
-I heavily references this [AWS sample project](<https://github.com/aws-samples/amazon-sagemaker-ml-pipeline-deploy-with-terraform/tree/main>). I made a fair amount of Terraform changes to clean up project and to have the project successfully run for me. I also added the helper scripts to make running and cleaning up the project easier.
+This project is based on the following [AWS sample project](<https://github.com/aws-samples/amazon-sagemaker-ml-pipeline-deploy-with-terraform/tree/main>). I made a fair amount of Terraform changes for consistency and to have the project successfully run for me. I also added the helper scripts to make running and cleaning up the project easier.
 
 ## Getting Started
 
